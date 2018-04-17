@@ -1,6 +1,5 @@
 import bio.bam.pileup;
 import bio.bam.reader;
-import mir.ndslice;
 import std.algorithm: copy, count, filter, isSorted, map, sort, topN, uniq;
 import std.array;
 import std.conv: to;
@@ -10,7 +9,7 @@ import std.math: fabs;
 import std.range;
 import std.stdio;
 
-static string usage = "MADmax - scan for amplified read counts using MAD\nUsage: madmax -b|--bamfile <bamfile> -w|--window-size [INT] -r|min-run [INT]";
+static string usage = "MADmax - scan for amplified read counts using MAD\nUsage: madmax -b|--bamfile [PATH] -c|--mad-const [FLOAT] -w|--window-size [INT] -r|min-run [INT]";
 
 struct Position {
     ulong depth;

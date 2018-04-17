@@ -5,9 +5,7 @@
 	],
 	"importPaths": ["BioD"],
 	"dependencies": {
-		"biod": {"versions": "~master", "path": "./BioD"},
-        "emsi_containers": "~>0.8.0-alpha.5",
-        "mir": "1.1.2"
+		"biod": {"versions": "~master", "path": "./BioD"}
 	},
 	"description": "A minimal D application.",
 	"copyright": "Copyright © 2018, Kevin Gori",
