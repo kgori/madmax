@@ -1,0 +1,17 @@
+.dub
+dub.selections.json
+docs.json
+__dummy.html
+docs/
+madmax.so
+madmax.dylib
+madmax.dll
+madmax.a
+madmax.lib
+madmax-test-*
+*.exe
+*.o
+*.obj
+*.lst
+madmax
+data/
