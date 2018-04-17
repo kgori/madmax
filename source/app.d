@@ -113,7 +113,7 @@ void write_outliers(Array)(Array outliers1, Array outliers2, int minRunLength, r
         else {
             // emit current range
             if ((range.end - range.start + 1) > minRunLength && range.depthsum > 0) {
-                writefln("%s:%d-%d\t%f",
+                writefln("%s\t%d\t%d\t%f",
                          bam.reference_sequences[range.ref_id].name, range.start+1, range.end+1,
                          to!double(range.depthsum) / range.n);
             }
@@ -125,10 +125,11 @@ void write_outliers(Array)(Array outliers1, Array outliers2, int minRunLength, r
     }
     // emit any remaining range
     if ((range.end - range.start + 1) > minRunLength && range.depthsum > 0) {
-        writefln("%s:%d-%d\t%f",
+        writefln("%s\t%d\t%d\t%f",
                  bam.reference_sequences[range.ref_id].name, range.start+1, range.end+1,
                  to!double(range.depthsum) / range.n);
     }
+    stdout.flush();
 }
 
 void main(string[] argv)
@@ -169,6 +170,7 @@ void main(string[] argv)
         bam.createIndex();
     }
 
+    writeln("CHROM\tREGION.START\tREGION.END\tMEAN.DEPTH");
     // TODO: Use running median using an Indexable Skiplist: https://code.activestate.com/recipes/576930/
     // for now, this is the dumb version
     foreach (ref reference; bam.reference_sequences) {
