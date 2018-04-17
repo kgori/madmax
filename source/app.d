@@ -97,7 +97,7 @@ Array find_outliers(Array)(ref Array buf1, ref Array buf2, double constval) {
 Returns true if b is consecutive to a
 +/
 bool consecutive(Position a, Position b) {
-    return a.ref_id == b.ref_id && a.pos+1 == b.pos;
+    return (a.ref_id == b.ref_id) && (a.pos + 1 == b.pos);
 }
 
 void write_outliers(Array)(Array outliers1, Array outliers2, int minRunLength, ref BamReader bam) {
@@ -105,11 +105,13 @@ void write_outliers(Array)(Array outliers1, Array outliers2, int minRunLength, r
     auto range = PositionRange(prev.ref_id, prev.pos, prev.pos, 0, 1);
     foreach (pos; chain(outliers1, outliers2).sort!"a.pos < b.pos".uniq) {
         if (consecutive(prev, pos)) {
+            // extend current range
             range.end++;
             range.n++;
             range.depthsum += pos.depth;
         }
         else {
+            // emit current range
             if ((range.end - range.start + 1) > minRunLength && range.depthsum > 0) {
                 writefln("%s:%d-%d\t%f",
                          bam.reference_sequences[range.ref_id].name, range.start+1, range.end+1,
@@ -120,6 +122,12 @@ void write_outliers(Array)(Array outliers1, Array outliers2, int minRunLength, r
             range.end = pos.pos;
         }
         prev = pos;
+    }
+    // emit any remaining range
+    if ((range.end - range.start + 1) > minRunLength && range.depthsum > 0) {
+        writefln("%s:%d-%d\t%f",
+                 bam.reference_sequences[range.ref_id].name, range.start+1, range.end+1,
+                 to!double(range.depthsum) / range.n);
     }
 }
 
