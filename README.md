@@ -16,8 +16,11 @@ usage
 ===
 
 ```madmax -b|--bamfile [PATH] -c|--mad-const [FLOAT] -w|--window-size [INT] -r|min-run [INT]```
-```bamfile``` = path to BAM
-```mad-const``` = output depths with a deviation from the median greater than ```mad-const * MAD```
-```window-size``` = length of sliding window
-```min-run``` = minimum number of consecutive positions to be considered a region of high depth
 
+```bamfile``` = path to BAM
+
+```mad-const``` = output depths with a deviation from the median greater than ```mad-const * MAD```
+
+```window-size``` = length of sliding window
+
+```min-run``` = minimum number of consecutive positions to be considered a region of high depth
